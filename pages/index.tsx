@@ -3,7 +3,15 @@ import Image from 'next/image'
 
 import styles from '@/pages/index.module.css'
 
-export default function Home() {
+import { getData } from '../lib/org'
+import { join } from 'path'
+import { GetStaticProps } from 'next'
+
+type Props = {
+  content: string
+}
+
+export default function Home({ content }: Props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -19,6 +27,7 @@ export default function Home() {
         <p className={styles.description}>
           Get started by editing <code>pages/index.js</code>
         </p>
+        <div dangerouslySetInnerHTML={{ __html: content }} />
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -62,4 +71,13 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+  const directory = join(process.cwd(), 'pages')
+  const content = await getData(join(directory, `sample.org`))
+
+  return {
+    props: { content: content }
+  }
 }
