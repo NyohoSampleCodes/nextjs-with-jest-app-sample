@@ -24,6 +24,7 @@ exports[`renders homepage unchanged 1`] = `
           pages/index.js
         </code>
       </p>
+      <div />
       <div
         class="grid"
       >
